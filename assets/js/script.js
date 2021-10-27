@@ -1,27 +1,59 @@
 // TODO: Declare any global variables we need
+let totalHeads = 0
+let totalTails = 0
+let headPercentage = 0
+let tailsPercentage = 0
+let totalFlips = totalHeads + totalTails
+defaultMessage = "Let's get Rolling!"
+// let image = ['/assets/images/penny-heads.jpg', '/assets/images/penny-tails.jpg']
+let images = [
+    {
+        imagePath: '/assets/images/penny-heads.jpg',
+        message: 'You Flipped Heads',
+        side: 'heads'
+    },
+    {
+        imagePath: '/assets/images/penny-tails.jpg',
+        message: 'You Flipped Tails',
+        side: 'tails'
+    }
+]
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    // This is just a sanity check to make sure your JavaScript script is getting loaded
-    // You can remove it once you see it in your browser console in the developer tools
-    console.log('Hi')
+document.querySelector("#flip").addEventListener('click', function(){
+    //get random image Object
+    let randomImage =  images[Math.floor(Math.random() * images.length)];
+    // set image src to flipped coin
+     document.querySelector('#penny-image').setAttribute('src', randomImage.imagePath);
+     document.querySelector('.message-container').innerText = randomImage.message;
 
-    // TODO: Add event listener and handler for flip and clear buttons
+     if (randomImage.side === "heads"){
+          totalHeads++
+          document.querySelector('#heads').textContent = totalHeads;
+     } else {
+         totalTails++
+         document.querySelector('#tails').textContent = totalTails;
+     }
+     totalFlips = totalHeads + totalTails
+     headPercentage = Math.round((totalHeads / totalFlips) * 100);
+     tailsPercentage = Math.round((totalTails / totalFlips) * 100);
 
-    // Flip Button Click Handler
-        // TODO: Determine flip outcome
-        // TODO: Update image and status message in the DOM
+     document.querySelector('#heads-percent').textContent = headPercentage + '%';
+     document.querySelector('#tails-percent').textContent = tailsPercentage + '%';
 
-        // Update the scorboard
-        // TODO: Calculate the total number of rolls/flips
-        // Make variables to track the percentages of heads and tails
-        // TODO: Use the calculated total to calculate the percentages
-        // HINT: Make sure not to divide by 0! (if total is 0, percent will be 0 as well)
-        // TODO: Update the display of each table cell
+     console.log(headPercentage, tailsPercentage)
+})
 
+document.querySelector('#clear').addEventListener('click', function(){
+totalHeads = 0
+totalTails = 0
+headPercentage = 0
+tailsPercentage = 0
+totalFlips = 0
 
-    // Clear Button Click Handler
-        // TODO: Reset global variables to 0
-        // TODO: Update the scoreboard (same logic as in flip button click handler)
-
+document.querySelector('#heads').textContent = totalHeads
+document.querySelector('#heads-percent').textContent = headPercentage + '%'
+document.querySelector('#tails').textContent = totalTails
+document.querySelector('#tails-percent').textContent = tailsPercentage + '%'
+document.querySelector('.message-container').textContent = defaultMessage
 })
